@@ -33,7 +33,7 @@ namespace Commander.Controllers
             return Ok(_mapper.Map<IEnumerable<CommandReadDto>>(commandItems));
         }
 
-        // HTTP GET api/commands/{id} - Take an id as an argument and returns CommandReadDto
+        // HTTP GET api/commands/{id} - Take an id as an argument and returns CommandReadDto (HTTP 200 status code)
         [HttpGet("{id}", Name = "GetCommandById")]
         public ActionResult<CommandReadDto> GetCommandById(int id)
         {
@@ -43,13 +43,13 @@ namespace Commander.Controllers
                 return NotFound();
             }
 
-            // Mapping from Command model that had data to a new empty CommandReadDto
+            // Mapping from Command model to a new empty CommandReadDto
             var mapping = _mapper.Map<CommandReadDto>(commandItem);
             return Ok(mapping);
      
         }
 
-        // HTTP POST api/commands - Take a DTO as an argument and returns CommandReadDto
+        // HTTP POST api/commands - Take a DTO as an argument and returns CommandReadDto (HTTP 201 status code)
         [HttpPost]
         public ActionResult <CommandReadDto> CreateCommand(CommandCreateDto createDto)
         {
@@ -66,7 +66,7 @@ namespace Commander.Controllers
             return CreatedAtRoute(nameof(GetCommandById), new { Id = commandReadDto.Id }, commandReadDto);
         }
 
-        // HTTP PUT api/commands/{id} - Takes id and CommandUpdateDto as arguments and returns nothing back
+        // HTTP PUT api/commands/{id} - Takes id and CommandUpdateDto as arguments
         [HttpPut("{id}")]
         public ActionResult UpdateCommand(int id, CommandUpdateDto commandUpdateDto)
         {
@@ -89,7 +89,7 @@ namespace Commander.Controllers
 
         }
 
-        // HTTP PATCH api/commands/{id} - Takes id and CommandUpdateDto as arguments and returns nothing back 
+        // HTTP PATCH api/commands/{id} - Takes id and JsonPatchDocument of CommandUpdateDto as arguments
         [HttpPatch("{id}")]
         public ActionResult PartialUpdateCommand(int id, JsonPatchDocument<CommandUpdateDto> jsonPatchDocument)
         {
@@ -115,7 +115,7 @@ namespace Commander.Controllers
 
         }
 
-        // HTTP DELETE api/commands/{id} - Takes id as argument and returns nothing back
+        // HTTP DELETE api/commands/{id} - Takes id as argument
         [HttpDelete("{id}")]
         public ActionResult DeleteCommand(int id)
         {
