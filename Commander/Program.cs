@@ -20,7 +20,16 @@ namespace Commander
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder
+                    // https://www.mssqltips.com/sqlservertip/6348/securely-manage-database-credentials-using-visual-studio-manage-user-secrets/
+                    .ConfigureAppConfiguration((context, config) =>
+                    {
+                        var env = context.HostingEnvironment;
+                        config.AddJsonFile("appsettings.json").AddJsonFile($"appsettings.{env.EnvironmentName}.json");
+                        config.AddEnvironmentVariables();
+                       
+                    })
+                    .UseStartup<Startup>();
                 });
     }
 }
